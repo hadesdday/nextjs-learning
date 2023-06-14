@@ -1,12 +1,12 @@
-import Image from "next/image";
+import { MainLayout } from "@/components/layout";
+import { NextPageWithLayout } from "@/models";
 import { Inter } from "next/font/google";
-import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+const Home: NextPageWithLayout = () => {
   const router = useRouter();
 
   const goToPostDetail = () => {
@@ -52,4 +52,7 @@ export default function Home() {
       <button onClick={goToTestSlugs}>Go to testt slug</button>
     </>
   );
-}
+};
+Home.Layout = MainLayout;
+
+export default Home;

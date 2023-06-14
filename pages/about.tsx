@@ -1,4 +1,5 @@
 import Header from "@/components/common/header";
+import { MainLayout } from "@/components/layout";
 // import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import * as React from "react";
@@ -11,7 +12,7 @@ export interface IAboutPageProps {
 //   ssr: true,
 // });
 
-export default function App(props: IAboutPageProps) {
+export default function AboutPage(props: IAboutPageProps) {
   const [postList, setPostList] = React.useState([]);
 
   const router = useRouter();
@@ -49,8 +50,8 @@ export default function App(props: IAboutPageProps) {
     );
   }
   return (
-    <div>
-      Hello from about page
+    <>
+      <h1 className="text-4xl font-bold">Hello from about page</h1>
       {/* <DynamicHeader /> */}
       <Header />
       <ul className="postlist">
@@ -61,9 +62,11 @@ export default function App(props: IAboutPageProps) {
       <button onClick={handleClick} className="bg-slate-400 shadow-sm m-2">
         Click me
       </button>
-    </div>
+    </>
   );
 }
+
+AboutPage.Layout = MainLayout; //su dung main layout cho trang nay
 
 export async function getStaticProps() {
   console.log("get static props");
