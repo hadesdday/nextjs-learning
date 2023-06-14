@@ -1,4 +1,5 @@
 import { GetStaticProps, GetStaticPropsContext } from "next";
+import Link from "next/link";
 import * as React from "react";
 
 interface Post {
@@ -17,16 +18,22 @@ export default function Posts(props: PageProps) {
   console.log("size", props.posts.length);
 
   return (
-    <div>
-      hello from posts page
-      {props.posts.map((i, index) => {
-        return (
-          <li key={index}>
-            {i.id}-{i.title}
-          </li>
-        );
-      })}
-    </div>
+    <>
+      <button className="text-lg font-bold">List post</button>
+      <ul>
+        {props.posts.map((i, index) => {
+          return (
+            <li key={index}>
+              <Link href={`/posts/${i.id}`}>
+                <button className="bg-gray-500 m-6">
+                  {i.id}-{i.title}
+                </button>
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+    </>
   );
 }
 
