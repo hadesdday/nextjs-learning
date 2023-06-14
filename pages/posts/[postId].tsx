@@ -2,14 +2,16 @@ import { log } from "console";
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import * as React from "react";
 
 export interface IPostDetailsProps {
   postDetails: any;
 }
 
 export default function PostDetails(props: IPostDetailsProps) {
-  // const router = useRouter();
+  const router = useRouter();
+  if (router.isFallback) {
+    return <div className="text-lg">Loading...</div>;
+  }
   // const { postId } = router.query;
   if (!props.postDetails) return null;
   const { id, title, author, description, createdAt, updatedAt, imageUrl } =
@@ -32,7 +34,7 @@ export default function PostDetails(props: IPostDetailsProps) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  log("get static path");
+  console.log("get static path");
   //run this first and build data to json file , ui to html file
   // build to N html and json file contains its data
   const response = await fetch(
@@ -45,7 +47,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     paths: data.data.map((i: any) => ({
       params: { postId: i.id },
     })),
-    fallback: false,
+    fallback: true,
   };
 };
 
@@ -70,5 +72,6 @@ export const getStaticProps: GetStaticProps<IPostDetailsProps> = async (
     props: {
       postDetails: data,
     },
+    revalidate: 5, //only work in production mode
   };
 };
