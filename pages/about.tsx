@@ -1,10 +1,10 @@
-import Header from "@/components/common/header";
 import { MainLayout } from "@/components/layout";
 import Link from "next/link";
 // import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { Box, Typography, Button } from "@mui/material";
+import { Header } from "@/components/common";
 
 export interface IAboutPageProps {
   name: string;

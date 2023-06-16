@@ -1,6 +1,6 @@
 import { MainLayout } from "@/components/layout";
 import { NextPageWithLayout } from "@/models";
-import Link from "next/link";
+import { Box } from "@mui/material";
 import { useRouter } from "next/router";
 
 const Home: NextPageWithLayout = () => {
@@ -37,7 +37,7 @@ const Home: NextPageWithLayout = () => {
   };
   return (
     <>
-      <title>Home page</title>
+      {/* <title>Home page</title>
       <Link href="/about" scroll={true} legacyBehavior>
         <a>About page</a>
       </Link>
@@ -46,7 +46,9 @@ const Home: NextPageWithLayout = () => {
       <br />
       <button onClick={goToDetailParams}>Go to post details params</button>
       <br />
-      <button onClick={goToTestSlugs}>Go to testt slug</button>
+      <button onClick={goToTestSlugs}>Go to testt slug</button> */}
+
+      <Box>Home page</Box>
     </>
   );
 };
