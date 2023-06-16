@@ -4,7 +4,7 @@ import Link from "next/link";
 // import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import * as React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 
 export interface IAboutPageProps {
   name: string;
@@ -70,6 +70,9 @@ export default function AboutPage(props: IAboutPageProps) {
         Click me
       </button>
       <Link href="/dashboard">Dashboard</Link>
+      <Button variant="contained" color="success" sx={{ p: 1 }}>
+        Test
+      </Button>
     </>
   );
 }
