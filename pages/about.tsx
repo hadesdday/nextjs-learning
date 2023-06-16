@@ -4,6 +4,7 @@ import Link from "next/link";
 // import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import * as React from "react";
+import { Box, Typography } from "@mui/material";
 
 export interface IAboutPageProps {
   name: string;
@@ -52,6 +53,11 @@ export default function AboutPage(props: IAboutPageProps) {
   }
   return (
     <>
+      <Box>
+        <Typography component="h1" variant="h3" color="primary.main">
+          About page
+        </Typography>
+      </Box>
       <h1 className="text-4xl font-bold">Hello from about page</h1>
       {/* <DynamicHeader /> */}
       <Header />
