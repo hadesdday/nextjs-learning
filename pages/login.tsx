@@ -1,38 +1,31 @@
-import { authApi } from "@/api-client";
-import axios from "axios";
-import * as React from "react";
+import { useAuth } from "@/hooks";
 
 export interface ILoginPageProps {}
 
 export default function LoginPage() {
-  const [data, setData] = React.useState<any>();
-
+  const { login, logout, profile } = useAuth({
+    revalidateOnMount: false,
+  });
   async function handleLogin() {
     try {
-      const response = await authApi.login({
-        username: "testw",
-        password: "123123w",
-      });
-      console.log("success", response);
-      setData(response.data);
+      login();
+      console.log("success login,you can redirect now");
     } catch (error) {
       console.log("login failed", error);
     }
   }
-  async function handleGetProfile() {
-    try {
-      const response = await authApi.getProfile();
-      console.log("get profile success", response);
-      setData(response.data);
-    } catch (error) {
-      console.log("get profile failed", error);
-    }
-  }
+  // async function handleGetProfile() {
+  //   try {
+  //     const response = profile();
+  //     console.log("get profile success", response);
+  //   } catch (error) {
+  //     console.log("get profile failed", error);
+  //   }
+  // }
   async function handleLogout() {
     try {
-      const response = await authApi.logout();
-      console.log("logout success", response);
-      setData(null);
+      logout();
+      console.log("logout success,redirect now");
     } catch (error) {
       console.log("logout failed", error);
     }
@@ -42,7 +35,7 @@ export default function LoginPage() {
     <div>
       <div className="m-2">
         <h1 className="text-xl font-bold">Action data</h1>
-        <div>{JSON.stringify(data)}</div>
+        <div>{JSON.stringify(profile || {}, null, 4)}</div>
       </div>
       <h1>Login page</h1>
       <div className="m-2">
@@ -53,14 +46,14 @@ export default function LoginPage() {
           Login
         </button>
       </div>
-      <div className="m-2">
+      {/* <div className="m-2">
         <button
           className="m-2 bg-red-400 text-white font-semibold rounded p-2 transition-opacity duration-25 ease-in hover:opacity-80"
           onClick={handleGetProfile}
         >
           Get profile
         </button>
-      </div>
+      </div> */}
       <div className="m-2">
         <button
           className="m-2 bg-red-400 text-white font-semibold rounded p-2 transition-opacity duration-25 ease-in hover:opacity-80"
