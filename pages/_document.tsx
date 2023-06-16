@@ -1,18 +1,17 @@
-import * as React from "react";
-import Document, {
-  Html,
-  Head,
-  Main,
-  NextScript,
-  DocumentProps,
-  DocumentContext,
-} from "next/document";
+import createEmotionCache from "@/utils/create-emotion-cache";
+import theme from "@/utils/theme";
+import { EmotionCache } from "@emotion/cache";
 import createEmotionServer from "@emotion/server/create-instance";
 import { AppProps, AppType } from "next/app";
-import theme, { roboto } from "@/utils/theme";
-import createEmotionCache from "@/utils/create-emotion-cache";
-import { EmotionCache } from "@emotion/cache";
-import { Roboto_Mono } from "next/font/google";
+import Document, {
+  DocumentContext,
+  DocumentProps,
+  Head,
+  Html,
+  Main,
+  NextScript,
+} from "next/document";
+import * as React from "react";
 
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
@@ -24,7 +23,7 @@ interface MyDocumentProps extends DocumentProps {
 
 export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
   return (
-    <Html lang="en" className={roboto.className}>
+    <Html lang="en">
       <Head>
         {/* PWA primary color */}
         <meta name="theme-color" content={theme.palette.primary.main} />
