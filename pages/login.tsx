@@ -1,15 +1,18 @@
 import { useAuth } from "@/hooks";
+import { useRouter } from "next/router";
 
 export interface ILoginPageProps {}
 
 export default function LoginPage() {
+  const router = useRouter();
   const { login, logout, profile } = useAuth({
     revalidateOnMount: false,
   });
   async function handleLogin() {
     try {
-      login();
+      await login();
       console.log("success login,you can redirect now");
+      await router.push("/dashboard");
     } catch (error) {
       console.log("login failed", error);
     }

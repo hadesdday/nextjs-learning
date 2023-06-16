@@ -1,5 +1,6 @@
 import Header from "@/components/common/header";
 import { MainLayout } from "@/components/layout";
+import Link from "next/link";
 // import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import * as React from "react";
@@ -62,6 +63,7 @@ export default function AboutPage(props: IAboutPageProps) {
       <button onClick={handleClick} className="bg-slate-400 shadow-sm m-2">
         Click me
       </button>
+      <Link href="/dashboard">Dashboard</Link>
     </>
   );
 }

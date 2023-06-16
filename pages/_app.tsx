@@ -1,8 +1,8 @@
+import axiosClient from "@/api-client/axios-client";
 import { EmptyLayout } from "@/components/layout";
 import { AppPropsWithLayout } from "@/models";
-import { SWRConfig } from "swr";
 import "@/styles/globals.css";
-import axiosClient from "@/api-client/axios-client";
+import { SWRConfig } from "swr";
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   //every change route this component will be re-render ( unmount and mount )
