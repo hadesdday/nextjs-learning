@@ -48,6 +48,7 @@ export default function HeaderMobile(props: IHeaderMobileProps) {
                         <MuiLink
                           sx={{
                             ml: 2,
+                            fontWeight: "medium",
                           }}
                           underline="none"
                           className={clsx({

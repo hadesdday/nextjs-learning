@@ -20,6 +20,7 @@ export default function HeaderDesktop(props: IHeaderDesktopProps) {
               <MuiLink
                 sx={{
                   ml: 2,
+                  fontWeight: "medium",
                 }}
                 underline="none"
                 className={clsx({ active: router.pathname === route.path })}

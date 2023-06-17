@@ -16,16 +16,7 @@ export function MainLayout({ children }: LayoutProps) {
   return (
     <Stack minHeight={"100vh"} flexGrow={1}>
       <Header />
-      <Box component={"main"}>
-        <Container maxWidth="sm" sx={{ bgcolor: "primary.main" }}>
-          SM
-        </Container>
-        <Container sx={{ bgcolor: "primary.main" }}>MD</Container>
-        <Link href={"/"}>Home</Link>
-        <Link href={"/blogs"}>Blogs</Link>
-        <Link href={"/works"}>Works</Link>
-        {children}
-      </Box>
+      <Box component={"main"}>{children}</Box>
       <Footer />
     </Stack>
   );
