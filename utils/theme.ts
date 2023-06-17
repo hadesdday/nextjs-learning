@@ -53,7 +53,7 @@ const theme = createTheme({
                 root: {
                     color: 'black',
                     transition: 'all 0.2s ease',
-                    '&:hover': {
+                    '&:hover, &.active': {
                         color: '#FF6464'
                     }
                 }
