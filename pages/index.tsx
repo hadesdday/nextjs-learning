@@ -1,3 +1,4 @@
+import { HeroSection } from "@/components/home";
 import { MainLayout } from "@/components/layout";
 import { NextPageWithLayout } from "@/models";
 import { Box } from "@mui/system";
@@ -48,7 +49,9 @@ const Home: NextPageWithLayout = () => {
       <br />
       <button onClick={goToTestSlugs}>Go to testt slug</button> */}
 
-      <Box>Home page</Box>
+      <Box>
+        <HeroSection />
+      </Box>
     </>
   );
 };

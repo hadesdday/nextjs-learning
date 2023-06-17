@@ -1,5 +1,5 @@
 import { Heebo } from 'next/font/google';
-import { createTheme } from '@mui/material/styles';
+import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import { red } from '@mui/material/colors';
 
 export const heebo = Heebo({
@@ -10,12 +10,13 @@ export const heebo = Heebo({
 });
 
 // Create a theme instance.
-const theme = createTheme({
+let theme = createTheme({
     palette: {
         primary: {
             main: '#FF6464',
         },
         secondary: {
+            light: "#EDF7FA",
             main: '#00A8CC',
         },
         error: {
@@ -58,8 +59,34 @@ const theme = createTheme({
                     }
                 }
             },
+        },
+        MuiButton: {
+            variants: [
+                {
+                    //when button has variant contained and primary this will be applied
+                    props: { variant: "contained", color: "primary" },
+                    style: {
+                        color: "white"
+                    }
+                },
+                {
+                    props: { about: "toggleDrawer" },
+                    style: {
+                        color: "black"
+                    }
+                },
+            ]
         }
     }
 });
+
+// theme.typography.h3 = {
+//     fontSize: '2rem',
+//     [theme.breakpoints.up('md')]: {
+//         fontSize: '3rem'
+//     }
+// }
+
+theme = responsiveFontSizes(theme);
 
 export default theme;

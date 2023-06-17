@@ -31,7 +31,7 @@ export default function HeaderMobile(props: IHeaderMobileProps) {
       <Container>
         <Stack direction={"row"} justifyContent={"flex-end"}>
           <React.Fragment key={"right"}>
-            <Button onClick={toggleDrawer}>
+            <Button onClick={toggleDrawer} about="toggleDrawer">
               <DehazeOutlined />
             </Button>
             <Drawer anchor={"right"} open={showDrawer} onClose={toggleDrawer}>
