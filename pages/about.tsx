@@ -3,8 +3,9 @@ import Link from "next/link";
 // import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import * as React from "react";
-import { Box, Typography, Button } from "@mui/material";
+import { Typography, Button } from "@mui/material";
 import { Header } from "@/components/common";
+import { Box } from "@mui/system";
 
 export interface IAboutPageProps {
   name: string;
