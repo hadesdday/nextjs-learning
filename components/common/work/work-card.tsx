@@ -1,6 +1,7 @@
 import { Work } from "@/models";
-import { Box, Chip, Stack, Typography } from "@mui/material";
+import { Box, Chip, Stack, Typography, Link as MuiLink } from "@mui/material";
 import Image from "next/legacy/image";
+import Link from "next/link";
 
 export interface IWorkCardProps {
   work: Work;
@@ -20,7 +21,9 @@ export function WorkCard({ work }: IWorkCardProps) {
       </Box>
       <Box>
         <Typography variant="h5" fontWeight={"bold"}>
-          {work.title}
+          <Link href={"/"} passHref legacyBehavior>
+            <MuiLink>{work.title}</MuiLink>
+          </Link>
         </Typography>
         <Stack direction={"row"} my={2}>
           <Chip
