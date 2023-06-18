@@ -97,6 +97,13 @@ let theme = createTheme({
                     }
                 }
             ]
+        },
+        MuiIcon: {
+            styleOverrides: {
+                root: {
+                    color: "black"
+                }
+            }
         }
     }
 });
