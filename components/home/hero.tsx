@@ -1,7 +1,7 @@
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import * as React from "react";
 import avatar from "@/images/avatar.png";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 export interface IHeroSectionProps {}
 
@@ -42,7 +42,7 @@ export function HeroSection(props: IHeroSectionProps) {
               borderRadius: "50%",
             }}
           >
-            <Image src={avatar} layout="responsive" alt="avatar" />
+            <Image src={avatar} layout="responsive" alt="avatar" priority />
           </Box>
         </Stack>
       </Container>

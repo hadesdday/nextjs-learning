@@ -56,7 +56,7 @@ let theme = createTheme({
             styleOverrides: {
                 root: {
                     color: 'black',
-                    transition: 'all 0.2s ease',
+                    transition: 'all 0.3s ease',
                     '&:hover, &.active': {
                         color: '#FF6464'
                     }
