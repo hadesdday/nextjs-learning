@@ -22,6 +22,9 @@ let theme = createTheme({
         error: {
             main: red.A400,
         },
+        text: {
+            primary: "#21243D"
+        }
     },
     typography: {
         fontFamily: heebo.style.fontFamily,
