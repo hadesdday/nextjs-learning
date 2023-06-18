@@ -1,3 +1,4 @@
+import { Seo } from "@/components/common";
 import { HeroSection, RecentPosts, FeaturedWorks } from "@/components/home";
 import { MainLayout } from "@/components/layout";
 import { NextPageWithLayout } from "@/models";
@@ -50,6 +51,16 @@ const Home: NextPageWithLayout = () => {
       <button onClick={goToTestSlugs}>Go to testt slug</button> */}
 
       <Box>
+        <Seo
+          data={{
+            title: "My Portfolio | Nguyen Van Hieu",
+            description:
+              "This is Hieu's porfolio page that you can know more about him",
+            url: "https://nextjs-learning-vanhieu.vercel.app/",
+            thumbnailUrl:
+              "https://res.cloudinary.com/dhvh2ocqq/image/upload/v1687096919/seo/i3ofwwxtp7mlu21bajlk.jpg",
+          }}
+        />
         <HeroSection />
         <RecentPosts />
         <FeaturedWorks />
