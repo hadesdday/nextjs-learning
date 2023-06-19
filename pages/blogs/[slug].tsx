@@ -1,7 +1,17 @@
 import { MainLayout } from "@/components/layout";
 import { Blog } from "@/models";
 import { getPostList } from "@/utils/blogs";
-import { Box, Container, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Container,
+  Stack,
+  Typography,
+  Link as MuiLink,
+  Divider,
+  Button,
+  Icon,
+} from "@mui/material";
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
 import rehypeAutolinkHeadings from "rehype-autolink-headings/lib";
 import rehypeDocument from "rehype-document";
@@ -14,6 +24,10 @@ import remarkRehype from "remark-rehype";
 import remarkToc from "remark-toc";
 import { unified } from "unified";
 import Script from "next/script";
+import { Seo } from "@/components/common";
+import { getFullDate, getGithubUsername, getShortDate } from "@/utils";
+import Link from "next/link";
+import { KeyboardBackspace } from "@mui/icons-material";
 
 export interface IBlogDetailsProps {
   blog: Blog;
@@ -22,16 +36,78 @@ export interface IBlogDetailsProps {
 export default function BlogDetailsPage({ blog }: IBlogDetailsProps) {
   if (!blog) return null;
 
-  const { title, author, description, mdContent, htmlContent } = blog;
+  const {
+    title,
+    author,
+    description,
+    htmlContent,
+    slug,
+    thumbnailUrl,
+    publishedDate,
+  } = blog;
 
   return (
     <Box sx={{ pt: 5 }}>
+      <Seo
+        data={{
+          title: title,
+          description: description,
+          url: `https://nextjs-learning-vanhieu.vercel.app/blogs/${slug}`,
+          thumbnailUrl:
+            thumbnailUrl ||
+            "https://raw.githubusercontent.com/vercel/serve/main/media/banner.png",
+        }}
+      />
       <Container>
-        <Typography variant="h4">{title}</Typography>
-        <Typography variant="h5">{author?.name}</Typography>
+        <Typography variant="h4" fontWeight={"bold"}>
+          {title}
+        </Typography>
+        <Typography
+          component="p"
+          textAlign={"center"}
+          py={2}
+          fontSize={"smaller"}
+          color={"GrayText"}
+        >
+          {getFullDate(publishedDate)}
+        </Typography>
+        <Stack
+          direction={"row"}
+          spacing={1}
+          justifyContent={"center"}
+          pt={2}
+          pb={8}
+        >
+          <Avatar src={author?.avatarUrl} />
+          <Stack direction={"column"}>
+            <Typography component="p" fontWeight={600} fontSize={"0.9em"}>
+              {author?.name}
+            </Typography>
+            <Link href={author?.profileUrl || ""} passHref legacyBehavior>
+              <MuiLink
+                variant="body2"
+                target="_blank"
+                about="blogAuthor"
+                sx={{ fontSize: "12px" }}
+              >
+                @{getGithubUsername(author?.profileUrl || "user")}
+              </MuiLink>
+            </Link>
+          </Stack>
+        </Stack>
+        <Divider sx={{ mb: 8 }} />
         <div dangerouslySetInnerHTML={{ __html: htmlContent || "" }}></div>
+        <Script src="/prism.js" strategy="afterInteractive"></Script>
+        <Box pt={10} pb={5}>
+          <Link href={"/blogs"} passHref legacyBehavior>
+            <Button variant="contained">
+              <KeyboardBackspace fontSize="small" />
+              Back to blogs
+            </Button>
+          </Link>
+        </Box>
+        <Divider sx={{ pt: 3 }} />
       </Container>
-      <Script src="/prism.js" strategy="afterInteractive"></Script>
     </Box>
   );
 }

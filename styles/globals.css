@@ -6,3 +6,16 @@ a {
 ul {
   list-style-type: none;
 }
+
+li > a {
+  transition: all 0.1s ease-in-out;
+}
+
+li > a:hover {
+  text-decoration: underline;
+  color: #ff6464;
+}
+
+img {
+  width: 100%;
+}

@@ -14,6 +14,7 @@ let theme = createTheme({
     palette: {
         primary: {
             main: '#FF6464',
+            light: "#0074de"
         },
         secondary: {
             light: "#EDF7FA",
@@ -62,6 +63,17 @@ let theme = createTheme({
                     }
                 }
             },
+            variants: [
+                {
+                    props: { variant: "body2", about: "blogAuthor" },
+                    style: {
+                        color: "#0074de",
+                        '&:hover': {
+                            opacity: 0.8
+                        }
+                    }
+                }
+            ]
         },
         MuiButton: {
             variants: [

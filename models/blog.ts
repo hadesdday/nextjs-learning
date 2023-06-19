@@ -15,4 +15,5 @@ export interface Blog {
     author?: Author;
     mdContent?: string;
     htmlContent?: string;
+    thumbnailUrl?: string;
 }
