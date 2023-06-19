@@ -30,7 +30,7 @@ export async function getPostList(): Promise<Blog[]> {
             publishedDate: new Date(data.date).getTime(),
             description: excerpt || '',
             mdContent: content,
-            thumbnailUrl: data.image
+            thumbnailUrl: data.image || ''
         })
     }
 

@@ -50,9 +50,9 @@ export default function BlogDetailsPage({ blog }: IBlogDetailsProps) {
     <Box sx={{ pt: 5 }}>
       <Seo
         data={{
-          title: title,
+          title: `${title} | Next.js Blog`,
           description: description,
-          url: `https://nextjs-learning-vanhieu.vercel.app/blogs/${slug}`,
+          url: `${process.env.HOST_URL}/blogs/${slug}`,
           thumbnailUrl:
             thumbnailUrl ||
             "https://raw.githubusercontent.com/vercel/serve/main/media/banner.png",
