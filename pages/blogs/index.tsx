@@ -1,37 +1,37 @@
+import { BlogItem } from "@/components/blog";
+import { MainLayout } from "@/components/layout";
 import { Blog } from "@/models";
-import { getShortDate } from "@/utils";
 import { getPostList } from "@/utils/blogs";
-import { Typography } from "@mui/material";
+import { Box, Container, Divider, Typography } from "@mui/material";
 import { GetStaticProps, GetStaticPropsContext } from "next";
-import Link from "next/link";
-import * as React from "react";
 
 interface BlogListProps {
   blogs: Blog[];
 }
 
 export default function BlogListPage({ blogs }: BlogListProps) {
-  console.log(blogs);
-
   return (
-    <>
-      <Typography variant="h1">List post</Typography>
-      <ul>
-        {blogs.map((i, index) => {
-          return (
-            <li key={index}>
-              <Link href={`/posts/${i.id}`}>
-                <button className="bg-gray-500 m-6">
-                  {i.id}-{i.title}-{getShortDate(i.publishedDate)}
-                </button>
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
-    </>
+    <Box>
+      <Container sx={{ pt: { xs: 2, sm: 4 } }}>
+        <Typography variant="h4" fontWeight={"bold"} py={4}>
+          Blog
+        </Typography>
+        <Box component={"ul"} sx={{ listStyleType: "none", p: 0 }}>
+          {blogs.map((blog, index) => {
+            return (
+              <li key={index}>
+                <BlogItem blog={blog} />
+                <Divider sx={{ my: 3 }} />
+              </li>
+            );
+          })}
+        </Box>
+      </Container>
+    </Box>
   );
 }
+
+BlogListPage.Layout = MainLayout;
 
 export const getStaticProps: GetStaticProps<BlogListProps> = async (
   context: GetStaticPropsContext
