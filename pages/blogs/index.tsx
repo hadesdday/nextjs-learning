@@ -1,3 +1,5 @@
+import { Blog } from "@/models";
+import { getShortDate } from "@/utils";
 import { getPostList } from "@/utils/blogs";
 import { Typography } from "@mui/material";
 import { GetStaticProps, GetStaticPropsContext } from "next";
@@ -5,20 +7,22 @@ import Link from "next/link";
 import * as React from "react";
 
 interface BlogListProps {
-  blogs: any[];
+  blogs: Blog[];
 }
 
-export default function BlogListPage(props: BlogListProps) {
+export default function BlogListPage({ blogs }: BlogListProps) {
+  console.log(blogs);
+
   return (
     <>
       <Typography variant="h1">List post</Typography>
       <ul>
-        {props.blogs.map((i, index) => {
+        {blogs.map((i, index) => {
           return (
             <li key={index}>
               <Link href={`/posts/${i.id}`}>
                 <button className="bg-gray-500 m-6">
-                  {i.id}-{i.title}
+                  {i.id}-{i.title}-{getShortDate(i.publishedDate)}
                 </button>
               </Link>
             </li>
@@ -37,7 +41,7 @@ export const getStaticProps: GetStaticProps<BlogListProps> = async (
 
   return {
     props: {
-      blogs: data.map((x: any) => ({ id: x.id, title: x.title })),
+      blogs: data,
     },
   };
 };
