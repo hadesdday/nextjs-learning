@@ -3,16 +3,17 @@ import { Blog } from "@/models";
 import { getPostList } from "@/utils/blogs";
 import { Box, Container, Typography } from "@mui/material";
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
-import Link from "next/link";
 import rehypeAutolinkHeadings from "rehype-autolink-headings/lib";
 import rehypeDocument from "rehype-document";
 import rehypeFormat from "rehype-format";
 import rehypeSlug from "rehype-slug";
 import rehypeStringify from "rehype-stringify";
 import remarkParse from "remark-parse";
+import remarkPrism from "remark-prism";
 import remarkRehype from "remark-rehype";
 import remarkToc from "remark-toc";
 import { unified } from "unified";
+import Script from "next/script";
 
 export interface IBlogDetailsProps {
   blog: Blog;
@@ -30,6 +31,7 @@ export default function BlogDetailsPage({ blog }: IBlogDetailsProps) {
         <Typography variant="h5">{author?.name}</Typography>
         <div dangerouslySetInnerHTML={{ __html: htmlContent || "" }}></div>
       </Container>
+      <Script src="/prism.js" strategy="afterInteractive"></Script>
     </Box>
   );
 }
@@ -59,6 +61,7 @@ export const getStaticProps: GetStaticProps<IBlogDetailsProps> = async (
   const file = await unified()
     .use(remarkParse)
     .use(remarkToc, { heading: "agenda.*" })
+    .use(remarkPrism)
     .use(remarkRehype)
     .use(rehypeSlug)
     .use(rehypeAutolinkHeadings, { behavior: "wrap" })
