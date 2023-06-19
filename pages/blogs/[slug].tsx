@@ -4,11 +4,14 @@ import { getPostList } from "@/utils/blogs";
 import { Box, Container, Typography } from "@mui/material";
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
 import Link from "next/link";
+import rehypeAutolinkHeadings from "rehype-autolink-headings/lib";
 import rehypeDocument from "rehype-document";
 import rehypeFormat from "rehype-format";
+import rehypeSlug from "rehype-slug";
 import rehypeStringify from "rehype-stringify";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
+import remarkToc from "remark-toc";
 import { unified } from "unified";
 
 export interface IBlogDetailsProps {
@@ -55,7 +58,10 @@ export const getStaticProps: GetStaticProps<IBlogDetailsProps> = async (
 
   const file = await unified()
     .use(remarkParse)
+    .use(remarkToc, { heading: "agenda.*" })
     .use(remarkRehype)
+    .use(rehypeSlug)
+    .use(rehypeAutolinkHeadings, { behavior: "wrap" })
     .use(rehypeDocument, { title: blog.title })
     .use(rehypeFormat)
     .use(rehypeStringify)
