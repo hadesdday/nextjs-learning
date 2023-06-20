@@ -29,11 +29,11 @@ export function InputField({
       inputRef={ref}
       name={name}
       label={label}
-      aria-required="true"
-      aria-label={error?.message}
       fullWidth
       size="small"
       margin="normal"
+      error={!!error}
+      helperText={error?.message}
       {...props}
     />
   );

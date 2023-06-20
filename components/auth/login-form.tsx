@@ -1,4 +1,3 @@
-import { useAuth } from "@/hooks";
 import { LoginPayload } from "@/models";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
@@ -15,17 +14,31 @@ import {
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import { InputField } from "../form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 export interface LoginFormProps {
   onSubmit?: (payload: LoginPayload) => void;
 }
 
 export function LoginForm({ onSubmit }: LoginFormProps) {
+  const schema = yup.object().shape({
+    username: yup
+      .string()
+      .required("Please enter your username")
+      .min(6, "Username must at least 6 characters"),
+    password: yup
+      .string()
+      .required("Please enter your password")
+      .min(6, "Password must at least 6 characters"),
+  });
+
   const { control, handleSubmit } = useForm<LoginPayload>({
     defaultValues: {
       username: "",
       password: "",
     },
+    resolver: yupResolver(schema),
   });
 
   const [showPassword, setShowPassword] = React.useState(false);
@@ -56,8 +69,8 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
                   name={"username"}
                   control={control}
                   label="Username"
-                  inputProps={{ minLength: 6 }}
-                  required={true}
+                  // inputProps={{ minLength: 6 }}
+                  // required={true}
                 />
               </Box>
               <Box p={1}>
@@ -66,8 +79,8 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
                   control={control}
                   label="Password"
                   type={showPassword ? "text" : "password"}
-                  inputProps={{ minLength: 6 }}
-                  required={true}
+                  // inputProps={{ minLength: 6 }}
+                  // required={true}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
@@ -84,7 +97,7 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
                 />
               </Box>
               <Button variant="contained" type="submit">
-                Submit
+                Login
               </Button>
             </Box>
           </CardContent>
