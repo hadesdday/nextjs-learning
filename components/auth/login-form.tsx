@@ -5,6 +5,7 @@ import {
   Button,
   Card,
   CardContent,
+  CircularProgress,
   Container,
   IconButton,
   InputAdornment,
@@ -14,26 +15,21 @@ import {
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import { InputField } from "../form";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useLoginFormSchema } from "@/hooks";
 
 export interface LoginFormProps {
   onSubmit?: (payload: LoginPayload) => void;
 }
 
 export function LoginForm({ onSubmit }: LoginFormProps) {
-  const schema = yup.object().shape({
-    username: yup
-      .string()
-      .required("Please enter your username")
-      .min(6, "Username must be at least 6 characters"),
-    password: yup
-      .string()
-      .required("Please enter your password")
-      .min(6, "Password must be at least 6 characters"),
-  });
+  const schema = useLoginFormSchema();
 
-  const { control, handleSubmit } = useForm<LoginPayload>({
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<LoginPayload>({
     defaultValues: {
       username: "",
       password: "",
@@ -45,7 +41,7 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
 
   async function handleSubmitForm(payload: LoginPayload) {
     try {
-      onSubmit?.(payload);
+      await onSubmit?.(payload);
     } catch (error) {
       console.log("login failed", error);
     }
@@ -96,7 +92,17 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
                   }}
                 />
               </Box>
-              <Button variant="contained" type="submit" fullWidth>
+              <Button
+                variant="contained"
+                type="submit"
+                fullWidth
+                disabled={isSubmitting}
+                startIcon={
+                  isSubmitting && (
+                    <CircularProgress color="inherit" size={"1em"} />
+                  )
+                }
+              >
                 Login
               </Button>
             </Box>

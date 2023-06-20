@@ -7,14 +7,13 @@ export interface ILoginPageProps {}
 
 export default function LoginPage() {
   const router = useRouter();
-  const { login, profile } = useAuth({
+  const { login } = useAuth({
     revalidateOnMount: false,
   });
   async function handleLogin(payload: LoginPayload) {
     try {
       await login(payload);
-      console.log("success login,you can redirect now");
-      await router.push("/dashboard");
+      await router.push("/");
     } catch (error) {
       console.log("login failed", error);
     }
