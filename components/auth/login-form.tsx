@@ -1,3 +1,6 @@
+import { useAuth } from "@/hooks";
+import { LoginPayload } from "@/models";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -12,38 +15,24 @@ import {
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import { InputField } from "../form";
-import { useAuth } from "@/hooks";
-import { useRouter } from "next/router";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-export interface ILoginFormProps {}
+export interface LoginFormProps {
+  onSubmit?: (payload: LoginPayload) => void;
+}
 
-export function LoginForm(props: ILoginFormProps) {
-  const { login, logout, profile } = useAuth({
-    revalidateOnMount: false,
-  });
-
-  const { control, handleSubmit } = useForm({
+export function LoginForm({ onSubmit }: LoginFormProps) {
+  const { control, handleSubmit } = useForm<LoginPayload>({
     defaultValues: {
       username: "",
       password: "",
     },
   });
 
-  const router = useRouter();
-  console.log("c", profile);
-
   const [showPassword, setShowPassword] = React.useState(false);
 
-  // if (profile !== null) router.push("/");
-
-  async function handleSubmitForm(values: any) {
+  async function handleSubmitForm(payload: LoginPayload) {
     try {
-      const { username, password } = values;
-      await login(username, password);
-      console.log("success login,you can redirect now");
-      console.log("submitted", values);
-      await router.push("/dashboard");
+      onSubmit?.(payload);
     } catch (error) {
       console.log("login failed", error);
     }

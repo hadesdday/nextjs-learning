@@ -1,23 +1,24 @@
 import { LoginForm } from "@/components/auth";
 import { useAuth } from "@/hooks";
+import { LoginPayload } from "@/models";
 import { useRouter } from "next/router";
 
 export interface ILoginPageProps {}
 
 export default function LoginPage() {
   const router = useRouter();
-  const { login, logout, profile } = useAuth({
+  const { login, profile } = useAuth({
     revalidateOnMount: false,
   });
-  // async function handleLogin() {
-  //   try {
-  //     await login();
-  //     console.log("success login,you can redirect now");
-  //     await router.push("/dashboard");
-  //   } catch (error) {
-  //     console.log("login failed", error);
-  //   }
-  // }
+  async function handleLogin(payload: LoginPayload) {
+    try {
+      await login(payload);
+      console.log("success login,you can redirect now");
+      await router.push("/dashboard");
+    } catch (error) {
+      console.log("login failed", error);
+    }
+  }
   // async function handleGetProfile() {
   //   try {
   //     const response = profile();
@@ -26,14 +27,14 @@ export default function LoginPage() {
   //     console.log("get profile failed", error);
   //   }
   // }
-  async function handleLogout() {
-    try {
-      logout();
-      console.log("logout success,redirect now");
-    } catch (error) {
-      console.log("logout failed", error);
-    }
-  }
+  // async function handleLogout() {
+  //   try {
+  //     logout();
+  //     console.log("logout success,redirect now");
+  //   } catch (error) {
+  //     console.log("logout failed", error);
+  //   }
+  // }
 
   return (
     <div>
@@ -66,7 +67,7 @@ export default function LoginPage() {
           Logout
         </button>
       </div> */}
-      <LoginForm />
+      <LoginForm onSubmit={handleLogin} />
     </div>
   );
 }

@@ -2,6 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import httpProxy, { ProxyResCallback } from 'http-proxy';
 import { setCookie } from 'cookies-next';
+import { error } from 'console';
 
 // type Data = {
 //     name: string
@@ -39,6 +40,10 @@ export default function handler(
             })
             proxyRes.on('end', function () {
                 try {
+                    if (proxyRes.statusCode && proxyRes.statusCode >= 300) {
+                        (res as NextApiResponse).status(proxyRes.statusCode).json(body);
+                        return resolve(true);
+                    }
                     const { accessToken, expiredAt } = JSON.parse(body);
                     //convert token to cookies
                     setCookie('access_token', accessToken, {
