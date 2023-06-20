@@ -26,11 +26,11 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
     username: yup
       .string()
       .required("Please enter your username")
-      .min(6, "Username must at least 6 characters"),
+      .min(6, "Username must be at least 6 characters"),
     password: yup
       .string()
       .required("Please enter your password")
-      .min(6, "Password must at least 6 characters"),
+      .min(6, "Password must be at least 6 characters"),
   });
 
   const { control, handleSubmit } = useForm<LoginPayload>({
@@ -96,7 +96,7 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
                   }}
                 />
               </Box>
-              <Button variant="contained" type="submit">
+              <Button variant="contained" type="submit" fullWidth>
                 Login
               </Button>
             </Box>
