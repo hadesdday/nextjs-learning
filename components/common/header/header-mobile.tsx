@@ -16,6 +16,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { ROUTE_LIST } from "./routes";
+import { useAuth } from "@/hooks";
 
 export interface IHeaderMobileProps {}
 
@@ -25,6 +26,18 @@ export default function HeaderMobile(props: IHeaderMobileProps) {
   const toggleDrawer = () => setShowDrawer(!showDrawer);
 
   const router = useRouter();
+
+  const { profile, logout } = useAuth();
+  const isLoggedIn = Boolean(profile?.username);
+
+  const routeList = ROUTE_LIST.filter(
+    (route) => !route.requireLogin || isLoggedIn
+  );
+
+  async function handleLogout() {
+    await toggleDrawer();
+    await logout();
+  }
 
   return (
     <Box display={{ xs: "block", md: "none" }}>
@@ -36,7 +49,7 @@ export default function HeaderMobile(props: IHeaderMobileProps) {
             </Button>
             <Drawer anchor={"right"} open={showDrawer} onClose={toggleDrawer}>
               <List>
-                {ROUTE_LIST.map((route) => (
+                {routeList.map((route) => (
                   <ListItem key={route.path} onClick={toggleDrawer}>
                     <ListItemButton>
                       <Link
@@ -61,6 +74,42 @@ export default function HeaderMobile(props: IHeaderMobileProps) {
                     </ListItemButton>
                   </ListItem>
                 ))}
+                {isLoggedIn ? (
+                  <ListItem key={"/logout"} onClick={handleLogout}>
+                    <ListItemButton>
+                      <MuiLink
+                        sx={{
+                          ml: 2,
+                          fontWeight: "medium",
+                        }}
+                        underline="none"
+                      >
+                        <ListItemText primary={"Logout"} />
+                      </MuiLink>
+                    </ListItemButton>
+                  </ListItem>
+                ) : (
+                  <ListItem key={"/login"} onClick={toggleDrawer}>
+                    <ListItemButton>
+                      <Link
+                        key={"/login"}
+                        href={"/login"}
+                        legacyBehavior
+                        passHref
+                      >
+                        <MuiLink
+                          sx={{
+                            ml: 2,
+                            fontWeight: "medium",
+                          }}
+                          underline="none"
+                        >
+                          <ListItemText primary={"Login"} />
+                        </MuiLink>
+                      </Link>
+                    </ListItemButton>
+                  </ListItem>
+                )}
               </List>
             </Drawer>
           </React.Fragment>
