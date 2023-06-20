@@ -1,4 +1,6 @@
+import { useLoginFormSchema } from "@/hooks";
 import { LoginPayload } from "@/models";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Box,
@@ -15,8 +17,7 @@ import {
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import { InputField } from "../form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useLoginFormSchema } from "@/hooks";
+import { Seo } from "../common";
 
 export interface LoginFormProps {
   onSubmit?: (payload: LoginPayload) => void;
@@ -53,6 +54,15 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
       textAlign={"center"}
       pt={5}
     >
+      <Seo
+        data={{
+          title: `Login | Next.js Blog`,
+          description: "Login to Next.js Blog System",
+          url: `${process.env.HOST_URL}/login`,
+          thumbnailUrl:
+            "https://raw.githubusercontent.com/vercel/serve/main/media/banner.png",
+        }}
+      />
       <Container>
         <Card sx={{ boxShadow: 3 }}>
           <CardContent>
