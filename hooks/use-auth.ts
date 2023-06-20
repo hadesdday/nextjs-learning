@@ -12,17 +12,19 @@ export function useAuth(options?: Partial<PublicConfiguration>) {
 
     const firstLoading = profile === undefined && error === undefined;
 
-    async function login() {
+    async function login(username: string, password: string) {
         await authApi.login({
-            username: "testw",
-            password: "123123w",
+            username: username,
+            password: password,
         });
         await mutate();
     }
+
     async function logout() {
         await authApi.logout();
-        mutate({}, false);
+        mutate(null, false);
     }
+
     return {
         profile,
         error,

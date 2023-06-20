@@ -1,18 +1,22 @@
+import { Seo } from "@/components/common";
 import { MainLayout } from "@/components/layout";
 import { Blog } from "@/models";
+import { getFullDate, getGithubUsername } from "@/utils";
 import { getPostList } from "@/utils/blogs";
+import { KeyboardBackspace } from "@mui/icons-material";
 import {
   Avatar,
   Box,
+  Button,
   Container,
+  Divider,
+  Link as MuiLink,
   Stack,
   Typography,
-  Link as MuiLink,
-  Divider,
-  Button,
-  Icon,
 } from "@mui/material";
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
+import Link from "next/link";
+import Script from "next/script";
 import rehypeAutolinkHeadings from "rehype-autolink-headings/lib";
 import rehypeDocument from "rehype-document";
 import rehypeFormat from "rehype-format";
@@ -23,11 +27,6 @@ import remarkPrism from "remark-prism";
 import remarkRehype from "remark-rehype";
 import remarkToc from "remark-toc";
 import { unified } from "unified";
-import Script from "next/script";
-import { Seo } from "@/components/common";
-import { getFullDate, getGithubUsername, getShortDate } from "@/utils";
-import Link from "next/link";
-import { KeyboardBackspace } from "@mui/icons-material";
 
 export interface IBlogDetailsProps {
   blog: Blog;
