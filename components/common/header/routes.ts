@@ -13,6 +13,7 @@ export const ROUTE_LIST = [
     },
     {
         label: "Dashboard",
-        path: "/dashboard"
+        path: "/dashboard",
+        requireLogin: true
     },
 ]
