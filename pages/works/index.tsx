@@ -1,8 +1,17 @@
 import { workApi } from "@/api-client";
+import { WorkList } from "@/components/common/work";
 import { MainLayout } from "@/components/layout";
 import { useWorkList } from "@/hooks";
 import { ListParams } from "@/models";
-import { Button } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Container,
+  Skeleton,
+  Stack,
+  Typography,
+} from "@mui/material";
 import * as React from "react";
 
 export interface IWorksPageProps {}
@@ -10,10 +19,9 @@ export interface IWorksPageProps {}
 export default function WorksPage(props: IWorksPageProps) {
   const [filters, setFilters] = React.useState<Partial<ListParams>>({
     _page: 1,
-    _limit: 10,
+    _limit: 5,
   });
   const { data, isLoading } = useWorkList({ params: filters });
-  console.log(data);
 
   // React.useEffect(() => {
   //   (async () => {
@@ -32,13 +40,41 @@ export default function WorksPage(props: IWorksPageProps) {
       _page: (prevFilter._page || 0) + 1,
     }));
   }
+
+  function handlePreviousPage() {
+    setFilters((prevFilter) => ({
+      ...prevFilter,
+      _page: (prevFilter._page || 2) - 1,
+    }));
+  }
+
   return (
-    <div>
-      Works page
-      <Button variant="contained" onClick={handleNextPage}>
-        next page
-      </Button>
-    </div>
+    <Box>
+      <Container>
+        <Box mb={4} mt={8}>
+          <Typography component="h1" variant="h4" fontWeight={"bold"}>
+            Works
+          </Typography>
+        </Box>
+        {isLoading ? (
+          <Box textAlign={"center"}>
+            <CircularProgress color="inherit" size={"8em"} />
+          </Box>
+        ) : (
+          <WorkList workList={data?.data || []} />
+        )}
+        <Box>
+          <Stack direction={"row"} justifyContent={"space-between"}>
+            <Button variant="contained" onClick={handlePreviousPage}>
+              Previous page
+            </Button>
+            <Button variant="contained" onClick={handleNextPage}>
+              Next page
+            </Button>
+          </Stack>
+        </Box>
+      </Container>
+    </Box>
   );
 }
 
