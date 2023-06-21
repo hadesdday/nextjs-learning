@@ -110,6 +110,14 @@ let theme = createTheme({
                 }
             ]
         },
+        MuiSkeleton: {
+            variants: [{
+                props: { about: "chipSkeleton", variant: "rounded" },
+                style: {
+                    borderRadius: 25
+                }
+            }]
+        },
         MuiIcon: {
             styleOverrides: {
                 root: {

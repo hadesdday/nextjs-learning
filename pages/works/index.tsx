@@ -56,13 +56,7 @@ export default function WorksPage(props: IWorksPageProps) {
             Works
           </Typography>
         </Box>
-        {isLoading ? (
-          <Box textAlign={"center"}>
-            <CircularProgress color="inherit" size={"8em"} />
-          </Box>
-        ) : (
-          <WorkList workList={data?.data || []} />
-        )}
+        <WorkList workList={data?.data || []} loading={isLoading} />
         <Box>
           <Stack direction={"row"} justifyContent={"space-between"}>
             <Button variant="contained" onClick={handlePreviousPage}>
