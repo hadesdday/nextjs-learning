@@ -30,9 +30,19 @@ export default function HeaderMobile(props: IHeaderMobileProps) {
   const { profile, logout } = useAuth();
   const isLoggedIn = Boolean(profile?.username);
 
-  const routeList = ROUTE_LIST.filter(
-    (route) => !route.requireLogin || isLoggedIn
+  const [routeList, setRouteList] = React.useState(() =>
+    ROUTE_LIST.filter((route) => !route.requireLogin)
   );
+  const [loggedInStatus, setLoggedInStatus] = React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    //after the first render run this
+    //calc routeList and setRouteList
+    setRouteList(
+      ROUTE_LIST.filter((route) => !route.requireLogin || isLoggedIn)
+    );
+    setLoggedInStatus(isLoggedIn);
+  }, [isLoggedIn]);
 
   async function handleLogout() {
     await toggleDrawer();
@@ -74,7 +84,7 @@ export default function HeaderMobile(props: IHeaderMobileProps) {
                     </ListItemButton>
                   </ListItem>
                 ))}
-                {isLoggedIn ? (
+                {loggedInStatus ? (
                   <ListItem key={"/logout"} onClick={handleLogout}>
                     <ListItemButton>
                       <MuiLink

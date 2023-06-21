@@ -1,10 +1,9 @@
 import { LayoutProps } from "@/models/common";
-import { Stack, Container } from "@mui/material";
-import Link from "next/link";
+import { Stack } from "@mui/material";
+import { Box } from "@mui/system";
 import * as React from "react";
 import { Footer } from "../common/footer";
 import { Header } from "../common/header";
-import { Box } from "@mui/system";
 
 export interface IMainLayoutProps {}
 
@@ -13,6 +12,8 @@ export function MainLayout({ children }: LayoutProps) {
     console.log("mainlayout mounting");
     return () => console.log("mainlayout unmounting");
   }, []);
+
+  // const Header = dynamic(() => import("@/components/common/header").then(mod => mod.Header), { ssr: false }); //use this to fix hydration problem ( but this is not seo friendly )
   return (
     <Stack minHeight={"100vh"} flexGrow={1}>
       <Header />
