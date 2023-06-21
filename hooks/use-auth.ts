@@ -2,7 +2,7 @@ import { authApi } from "@/api-client";
 import { StorageKeys } from "@/constants";
 import { LoginPayload, Profile } from "@/models";
 import useSWR from "swr";
-import { PublicConfiguration, SWRConfiguration } from "swr/_internal/dist";
+import { SWRConfiguration } from "swr/_internal/dist";
 
 function getUserInfo(): Profile | null {
     try {
@@ -13,7 +13,7 @@ function getUserInfo(): Profile | null {
     }
 }
 
-export function useAuth(options?: Partial<PublicConfiguration>) {
+export function useAuth(options?: Partial<SWRConfiguration>) {
     const configurations: SWRConfiguration = {
         dedupingInterval: 60 * 60 * 1000,
         revalidateOnFocus: false,
