@@ -1,15 +1,38 @@
 import { authApi } from "@/api-client";
-import { LoginPayload } from "@/models";
+import { StorageKeys } from "@/constants";
+import { LoginPayload, Profile } from "@/models";
 import useSWR from "swr";
-import { PublicConfiguration } from "swr/_internal/dist";
+import { PublicConfiguration, SWRConfiguration } from "swr/_internal/dist";
+
+function getUserInfo(): Profile | null {
+    try {
+        return JSON.parse(localStorage.getItem(StorageKeys.USER_INFO) || '');
+    } catch (error) {
+        // console.log("failed parse user info", error);
+        return null;
+    }
+}
 
 export function useAuth(options?: Partial<PublicConfiguration>) {
-    //profile
-    const { data: profile, error, mutate } = useSWR('/profile', {
+    const configurations: SWRConfiguration = {
         dedupingInterval: 60 * 60 * 1000,
         revalidateOnFocus: false,
-        ...options
-    });
+        ...options,
+        fallbackData: getUserInfo(),
+        onSuccess(data, key, config) {
+            //save user infor to local storage
+            localStorage.setItem(StorageKeys.USER_INFO, JSON.stringify(data))
+        },
+        onError(err, key, config) {
+            //failed to get profile -> logout
+            console.log(err) // send error log to server if any
+            localStorage.removeItem(StorageKeys.USER_INFO)
+            logout();
+        },
+    };
+
+    //profile
+    const { data: profile, error, mutate } = useSWR<Profile | null>('/profile', configurations);
 
     const firstLoading = profile === undefined && error === undefined;
 
@@ -21,6 +44,7 @@ export function useAuth(options?: Partial<PublicConfiguration>) {
     async function logout() {
         await authApi.logout();
         mutate(null, false);
+        localStorage.removeItem(StorageKeys.USER_INFO)
     }
 
     return {
