@@ -13,7 +13,9 @@ export function MainLayout({ children }: LayoutProps) {
     return () => console.log("mainlayout unmounting");
   }, []);
 
-  // const Header = dynamic(() => import("@/components/common/header").then(mod => mod.Header), { ssr: false }); //use this to fix hydration problem ( but this is not seo friendly )
+  // const Header = dynamic(() => import("@/components/common/header").then(mod => mod.Header), { ssr: false });
+  //use this to fix hydration problem ( but this is not seo friendly )
+  //if use this please export default function Header instead of export function
   return (
     <Stack minHeight={"100vh"} flexGrow={1}>
       <Header />
