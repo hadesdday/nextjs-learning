@@ -1,17 +1,8 @@
-import { workApi } from "@/api-client";
 import { WorkList } from "@/components/common/work";
 import { MainLayout } from "@/components/layout";
 import { useWorkList } from "@/hooks";
 import { ListParams } from "@/models";
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Container,
-  Skeleton,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Container, Pagination, Stack, Typography } from "@mui/material";
 import * as React from "react";
 
 export interface IWorksPageProps {}
@@ -23,6 +14,9 @@ export default function WorksPage(props: IWorksPageProps) {
   });
   const { data, isLoading } = useWorkList({ params: filters });
 
+  const totalPages = Boolean(data?.pagination)
+    ? Math.ceil(data.pagination._totalRows / data.pagination._limit)
+    : 0;
   // React.useEffect(() => {
   //   (async () => {
   //     try {
@@ -34,17 +28,13 @@ export default function WorksPage(props: IWorksPageProps) {
   //   })();
   // }, []);
 
-  function handleNextPage() {
+  function handleChangePage(
+    event: React.ChangeEvent<unknown>,
+    pageNumber: number
+  ) {
     setFilters((prevFilter) => ({
       ...prevFilter,
-      _page: (prevFilter._page || 0) + 1,
-    }));
-  }
-
-  function handlePreviousPage() {
-    setFilters((prevFilter) => ({
-      ...prevFilter,
-      _page: (prevFilter._page || 2) - 1,
+      _page: pageNumber,
     }));
   }
 
@@ -57,16 +47,15 @@ export default function WorksPage(props: IWorksPageProps) {
           </Typography>
         </Box>
         <WorkList workList={data?.data || []} loading={isLoading} />
-        <Box>
-          <Stack direction={"row"} justifyContent={"space-between"}>
-            <Button variant="contained" onClick={handlePreviousPage}>
-              Previous page
-            </Button>
-            <Button variant="contained" onClick={handleNextPage}>
-              Next page
-            </Button>
+        {totalPages > 0 && (
+          <Stack direction={"row"} justifyContent={"center"}>
+            <Pagination
+              count={totalPages}
+              page={filters._page}
+              onChange={handleChangePage}
+            />
           </Stack>
-        </Box>
+        )}
       </Container>
     </Box>
   );
