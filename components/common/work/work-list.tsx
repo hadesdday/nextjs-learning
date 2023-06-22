@@ -10,7 +10,6 @@ export interface IWorkListProps {
 }
 
 export function WorkList({ workList, loading }: IWorkListProps) {
-  if (workList.length === 0) return <Box textAlign={"center"}>No data</Box>;
   if (loading)
     return (
       <Box>
@@ -22,6 +21,7 @@ export function WorkList({ workList, loading }: IWorkListProps) {
         ))}
       </Box>
     );
+  if (workList.length === 0) return <Box textAlign={"center"}>No data</Box>;
   return (
     <Box>
       {workList.map((work) => (
