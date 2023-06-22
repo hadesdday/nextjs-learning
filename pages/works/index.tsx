@@ -1,7 +1,7 @@
-import { WorkList } from "@/components/common/work";
+import { WorkFilters, WorkList } from "@/components/common/work";
 import { MainLayout } from "@/components/layout";
 import { useWorkList } from "@/hooks";
-import { ListParams } from "@/models";
+import { ListParams, WorkFiltersPayload } from "@/models";
 import { Box, Container, Pagination, Stack, Typography } from "@mui/material";
 import * as React from "react";
 
@@ -38,6 +38,14 @@ export default function WorksPage(props: IWorksPageProps) {
     }));
   }
 
+  function handleFilterChange(filters: WorkFiltersPayload) {
+    setFilters((prevFilter) => ({
+      ...prevFilter,
+      _page: 1,
+      title_like: filters.search,
+    }));
+  }
+
   return (
     <Box>
       <Container>
@@ -46,6 +54,7 @@ export default function WorksPage(props: IWorksPageProps) {
             Works
           </Typography>
         </Box>
+        <WorkFilters onSubmit={handleFilterChange} />
         <WorkList workList={data?.data || []} loading={isLoading} />
         {totalPages > 0 && (
           <Stack direction={"row"} justifyContent={"center"}>
