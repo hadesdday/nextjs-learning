@@ -6,9 +6,10 @@ import useSWR, { SWRConfiguration } from "swr";
 export interface UseWorkListProps {
     params: Partial<ListParams>
     options?: SWRConfiguration
+    enabled?: boolean
 }
-export function useWorkList({ params, options }: UseWorkListProps) {
-    const swrResponse = useSWR([QueryKeys.GET_WORK_LIST, params], () => workApi.getAll(params),
+export function useWorkList({ params, options, enabled = true }: UseWorkListProps) {
+    const swrResponse = useSWR(enabled ? [QueryKeys.GET_WORK_LIST, params] : null, () => workApi.getAll(params),
         {
             dedupingInterval: 30 * 1000,
             fallbackData: {
@@ -22,7 +23,6 @@ export function useWorkList({ params, options }: UseWorkListProps) {
             keepPreviousData: true,
             ...options
         })
-
 
     return swrResponse;
 }

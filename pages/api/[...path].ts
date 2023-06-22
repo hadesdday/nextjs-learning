@@ -21,7 +21,7 @@ export default function handler(
     req: NextApiRequest,
     res: NextApiResponse<any>
 ) {
-    return new Promise((resolve) => {
+    return new Promise(() => {
         //convert cookies to Authorization header
         //get cookies from server side ( nodejs server)
         const accessToken = getCookie('access_token', { req, res });
@@ -41,8 +41,8 @@ export default function handler(
         // res.status(200).json({ name: 'Match ALL' })
 
         //when completely process, this will notify that the process was completed
-        proxy.once('proxyRes', () => {
-            resolve(true);
-        })
+        // proxy.once('proxyRes', () => {
+        //     resolve(true);
+        // })
     })
 }
