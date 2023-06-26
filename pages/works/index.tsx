@@ -1,3 +1,4 @@
+import { Seo } from "@/components/common";
 import { WorkFilters, WorkList } from "@/components/common/work";
 import { MainLayout } from "@/components/layout";
 import { useWorkList } from "@/hooks";
@@ -66,6 +67,15 @@ export default function WorksPage(props: IWorksPageProps) {
 
   return (
     <Box>
+      <Seo
+        data={{
+          title: `Works | Next.js Blog`,
+          description: "All things about my works",
+          url: `${process.env.HOST_URL}/blogs/`,
+          thumbnailUrl:
+            "https://raw.githubusercontent.com/vercel/serve/main/media/banner.png",
+        }}
+      />
       <Container>
         <Box mb={4} mt={8}>
           <Typography component="h1" variant="h4" fontWeight={"bold"}>

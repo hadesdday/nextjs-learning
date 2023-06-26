@@ -1,4 +1,4 @@
-import { InputField } from "@/components/form";
+import { AutocompleteField, InputField } from "@/components/form";
 import { WorkFiltersPayload } from "@/models";
 import { Search } from "@mui/icons-material";
 import { Box, InputAdornment, debounce } from "@mui/material";
@@ -48,6 +48,11 @@ export function WorkFilters({ onSubmit, initialValues }: WorkFiltersProps) {
         onChange={(event: ChangeEvent<HTMLInputElement>) => {
           debounceSearchChange();
         }}
+      />
+      <AutocompleteField
+        name={"tagList_search"}
+        control={control}
+        placeholder="Filter work by tag"
       />
     </Box>
   );
