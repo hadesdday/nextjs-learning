@@ -22,6 +22,7 @@ export default function WorksPage(props: IWorksPageProps) {
 
   const initialFiltersPayload: WorkFiltersPayload = {
     search: filters.title_like || "",
+    tagList_search: "",
   };
 
   const { data, isLoading } = useWorkList({
