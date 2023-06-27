@@ -18,15 +18,17 @@ export function WorkFilters({ onSubmit, initialValues }: WorkFiltersProps) {
   } = useForm<WorkFiltersPayload>({
     defaultValues: {
       search: "",
+      selectedTagList: [],
       ...initialValues,
     },
   });
 
   async function handleSubmitForm(payload: WorkFiltersPayload) {
     try {
-      await onSubmit?.(payload);
+      // await onSubmit?.(payload);
+      console.log(payload);
     } catch (error) {
-      console.log("login failed", error);
+      console.log("failed", error);
     }
   }
 
@@ -54,9 +56,14 @@ export function WorkFilters({ onSubmit, initialValues }: WorkFiltersProps) {
         label="Filter by category"
         placeholder="Categories"
         control={control}
-        options={[{ title: "easy", key: "ez" }]}
+        options={[
+          { title: "easy", key: "ez" },
+          { title: "gga", key: "gg" },
+        ]}
+        // @ts-ignore
         getOptionLabel={(option) => option.key}
         isOptionEqualToValue={(option, value) => option.key === value.key}
+        onChange={() => debounceSearchChange()}
       />
     </Box>
   );

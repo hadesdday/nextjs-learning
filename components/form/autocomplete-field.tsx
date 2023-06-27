@@ -19,6 +19,7 @@ export type AutocompleteFieldProps<T, K extends FieldValues> = Partial<
 
   options: T[];
   getOptionLabel: (option: T) => string;
+  onChange: (selectedOptions: T[]) => void;
 };
 
 export function AutocompleteField<T, K extends FieldValues>({
@@ -29,10 +30,7 @@ export function AutocompleteField<T, K extends FieldValues>({
   options,
   getOptionLabel,
   isOptionEqualToValue,
-  // onChange: externalOnChange,
-  // onBlur: externalOnBlur,
-  // ref: externalRef,
-  // value: externalValue,
+  onChange: externalOnChange,
   ...props
 }: AutocompleteFieldProps<T, K>) {
   const {
@@ -64,10 +62,20 @@ export function AutocompleteField<T, K extends FieldValues>({
         <TextField
           margin="normal"
           label={label}
+          error={!!error}
+          helperText={error?.message}
           placeholder={placeholder}
           {...params}
         />
       )}
+      onChange={(event, value) => {
+        //@ts-ignore
+        onChange(value);
+        externalOnChange?.(value as T[]);
+      }}
+      onBlur={onBlur}
+      value={value}
+      ref={ref}
     />
   );
 }
