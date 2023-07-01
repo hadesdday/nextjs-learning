@@ -30,8 +30,10 @@ export function WorkFilters({ onSubmit, initialValues }: WorkFiltersProps) {
 
   async function handleSubmitForm(payload: WorkFiltersPayload) {
     try {
-      // await onSubmit?.(payload);
-      console.log(payload);
+      if (!payload) return;
+      payload.tagList_like = payload.selectedTagList?.join("|") || "";
+      delete payload.selectedTagList; //delete selected tag list value
+      await onSubmit?.(payload);
     } catch (error) {
       console.log("failed", error);
     }

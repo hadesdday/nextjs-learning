@@ -218,7 +218,27 @@ A Form Control includes 2 main parts:
 ## `06-26` - AutocompleteField P3
 
 - Integrate with react hook form control
+- Binding form state: onChange, onBlur, ref, value, error
 
-## `06-27` - AutocompleteField P4
+## `06-27` - Populate data tag list to AutocompleteField
 
+- add new api file: api-client/tag-api.ts
+  GET: /api/tags?_page=1&_limit=30
+
+- new hook file: hooks/use-tag-list.ts
 - Populate data to AutocompleteField
+
+## `06-28` - Filter work list by multiple tags selection
+
+- filter works by tags (either tag1 or tag2 or tag3): 
+  GET /api/works?_page=1&_limit=10&`tagList_like=tag1|tag2|tag3`
+- transform form data into api payload
+
+```ts
+const formData = { search: '', selectedTagList: ['Design', 'Dashboard'] }
+
+// 1. turn selectedTagList into tagList_like (array to string using join())
+// 2. remove unused attr selectedTagList
+const apiPayload = { search: '', tagList_like: 'Design|Dashboard' }
+```
+- set initial value for auto complete field 

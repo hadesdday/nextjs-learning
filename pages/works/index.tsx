@@ -22,7 +22,7 @@ export default function WorksPage(props: IWorksPageProps) {
 
   const initialFiltersPayload: WorkFiltersPayload = {
     search: filters.title_like || "",
-    tagList_search: "",
+    selectedTagList: filters.tagList_like?.split("|") || [],
   };
 
   const { data, isLoading } = useWorkList({
@@ -59,6 +59,7 @@ export default function WorksPage(props: IWorksPageProps) {
           ...filters,
           _page: 1,
           title_like: newFilters.search,
+          tagList_like: newFilters.tagList_like,
         },
       },
       undefined,
